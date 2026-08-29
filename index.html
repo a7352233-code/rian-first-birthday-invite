@@ -8,11 +8,29 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:wght@400;700&family=Great+Vibes&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="page-bg">
     <!-- decorative toile pattern (subtle, inline svg as background via CSS) -->
+  </div>
+
+  <!-- Music Player Widget -->
+  <div class="music-player-widget">
+    <button id="musicToggle" class="music-toggle-btn" title="Toggle Background Music" aria-label="Toggle Background Music">
+      <i class="fas fa-music"></i>
+      <span class="music-label">Music</span>
+    </button>
+    <audio id="bgAudio" preload="metadata">
+      <source src="assets/ТОЙ ДУМАН – Жазира Байырбекова - Тұсау кесер.m4a" type="audio/mp4">
+      Your browser does not support the audio element.
+    </audio>
+    <div class="music-info-tooltip">
+      <p class="music-title">Жазира Байырбекова - Тұсау Кесер</p>
+      <p class="music-artist">ТОЙ ДУМАН</p>
+      <p class="music-status" id="musicStatus">Click to play</p>
+    </div>
   </div>
 
   <main class="invitation">
@@ -57,7 +75,7 @@
       <section class="message">
         <div class="card">
           <p class="eng">
-            Please join us as we celebrate Rian’s First Birthday and traditional Tusau Keser ceremony with the people who make life so special. We would be delighted to share this beautiful day with you.
+            Please join us as we celebrate Rian's First Birthday and traditional Tusau Keser ceremony with the people who make life so special. We would be delighted to share this beautiful day with you.
           </p>
           <p class="kz">
             Құрметті қонақтар! Жүрегіміздің ақ бөлшегі кішкентайымыздың 1 жас туған күні мен Тұсаукесер тойына арналған салтанатты дастарханымыздың қадірлі қонағы болуға шақырамыз!
@@ -69,21 +87,21 @@
         <div class="detail-grid">
           <div class="detail">
             <!-- Calendar icon -->
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="#5C7B9B" stroke-width="1.5"/><path d="M16 3v4M8 3v4" stroke="#5C7B9B" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="#5C7B9B" stroke-width="1.5"/><path d="M16 3v4M8 3v4" stroke="#5C7B9B" stroke-width="1.5" stroke-linecap="round"/><path d="M3 11h18" stroke="#5C7B9B" stroke-width="1.5"/></svg>
             <h4>SEPTEMBER 26, 2026</h4>
             <p class="kz">26 ҚЫРКҮЙЕК 2026</p>
           </div>
 
           <div class="detail">
             <!-- Clock icon -->
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="#5C7B9B" stroke-width="1.5"/><path d="M12 8v5l3 2" stroke="#5C7B9B" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="#5C7B9B" stroke-width="1.5"/><path d="M12 8v5l3 2" stroke="#5C7B9B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <h4>2:00 PM</h4>
             <p class="kz">Сағат 14:00</p>
           </div>
 
           <div class="detail">
             <!-- Location icon -->
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s8-4.8 8-11a8 8 0 10-16 0c0 6.2 8 11 8 11z" fill="none" stroke="#5C7B9B" stroke-width="1.5"/><circle cx="12" cy="10" r="2" fill="#5C7B9B" /></svg>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s8-4.8 8-11a8 8 0 10-16 0c0 6.2 8 11 8 11z" fill="none" stroke="#5C7B9B" stroke-width="1.5"/><circle cx="12" cy="11" r="2" fill="#5C7B9B"/></svg>
             <h4>920 Central Park Dr W, Carmel, IN 46032, UNITED STATES</h4>
             <p class="kz">920 Central Park Dr W, Carmel, IN 46032, АҚШ</p>
             <div class="map-actions">
@@ -101,7 +119,7 @@
       <footer class="rsvp">
         <p class="rsvp-text">
           PLEASE KINDLY RSVP BY SEPTEMBER 20TH, 2026 TO ASSEL AT <strong>463‑212‑4894</strong>.
-          <span class="kz">Бізбен бірге болуға ниет білдірсеңіз, өтініш 20 Қыркүйек 2026 жылға дейін Асселге хабарласыңыз: <strong>463‑212‑4894</strong>.</span>
+          <span class="kz">Бізбен бірге болуға ниет білдірсеңіз, өтініш 20 Қыркүйек 2026 жылға дейін Асселге хабарласыңыз. We warmly look forward to celebrating with you! / Біздің мәйітпен жүргендігіңізді құтты болсын!</span>
         </p>
         <div class="rsvp-actions">
           <button id="openRsvp" class="btn primary">CLICK TO RSVP / RSVP жасау</button>
