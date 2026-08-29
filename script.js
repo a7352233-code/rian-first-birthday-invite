@@ -1,63 +1,116 @@
-// Basic interactive JS: RSVP modal and simple reveal animations
-document.addEventListener('DOMContentLoaded', function(){
-  const openBtn = document.getElementById('openRsvp');
-  const modal = document.getElementById('rsvpModal');
-  const closeBtn = document.getElementById('closeRsvp');
-  const cancelBtn = document.getElementById('cancelRsvp');
-  const form = document.getElementById('rsvpForm');
+// Music Player Functionality
+const musicToggle = document.getElementById('musicToggle');
+const bgAudio = document.getElementById('bgAudio');
+const musicStatus = document.getElementById('musicStatus');
+let isPlaying = false;
 
-  function openModal(){ modal.setAttribute('aria-hidden','false'); modal.style.opacity = '1'; }
-  function closeModal(){ modal.setAttribute('aria-hidden','true'); modal.style.opacity = '0'; }
+// Initialize audio with lower volume
+bgAudio.volume = 0.4;
 
-  openBtn.addEventListener('click', openModal);
-  closeBtn.addEventListener('click', closeModal);
-  cancelBtn.addEventListener('click', closeModal);
-
-  modal.addEventListener('click', (e)=>{
-    if(e.target === modal) closeModal();
-  });
-
-  form.addEventListener('submit', function(evt){
-    evt.preventDefault();
-    const data = new FormData(form);
-    const name = data.get('name') || '';
-    const email = data.get('email') || '';
-    const message = data.get('message') || '';
-    const phone = '463-212-4894';
-    // Build mailto
-    const to = encodeURIComponent('assel@example.com'); // replace with actual email if desired
-    const subject = encodeURIComponent(`RSVP for Rian's 1st Birthday / Тұсаукесер — ${name}`);
-    const bodyLines = [
-      `Name: ${name}`,
-      `Email: ${email}`,
-      `Phone (if you prefer to be contacted): ${phone}`,
-      `Message: ${message}`,
-      ``,
-      `-- RSVP sent from the digital invitation`
-    ];
-    const body = encodeURIComponent(bodyLines.join('\n'));
-    const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
-    // open mail client
-    window.location.href = mailto;
-    closeModal();
-  });
-
-  // gentle reveal on scroll
-  const revealElems = document.querySelectorAll('.detail, .message .card, .signature, .rsvp');
-  const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.style.opacity = 1;
-        e.target.style.transform = 'translateY(0px)';
-        obs.unobserve(e.target);
-      }
+// Toggle music on button click
+musicToggle.addEventListener('click', () => {
+  if (isPlaying) {
+    bgAudio.pause();
+    isPlaying = false;
+    musicToggle.classList.remove('playing');
+    musicStatus.textContent = 'Click to play';
+  } else {
+    bgAudio.play().catch(err => {
+      console.log('Audio playback failed:', err);
+      musicStatus.textContent = 'Playback not available';
     });
-  }, {threshold:0.15});
-  revealElems.forEach(el=>{
-    el.style.opacity = 0;
-    el.style.transform = 'translateY(10px)';
-    el.style.transition = 'opacity .6s ease, transform .6s ease';
-    obs.observe(el);
-  });
+    isPlaying = true;
+    musicToggle.classList.add('playing');
+    musicStatus.textContent = 'Now playing...';
+  }
+});
 
+// Update status when audio ends
+bgAudio.addEventListener('ended', () => {
+  // Auto-replay since we have loop attribute
+  bgAudio.currentTime = 0;
+  bgAudio.play();
+});
+
+// Handle audio errors
+bgAudio.addEventListener('error', (e) => {
+  console.error('Audio error:', e);
+  musicStatus.textContent = 'Error loading audio';
+  musicToggle.classList.remove('playing');
+  isPlaying = false;
+});
+
+// RSVP Modal Functionality
+const openRsvp = document.getElementById('openRsvp');
+const closeRsvp = document.getElementById('closeRsvp');
+const cancelRsvp = document.getElementById('cancelRsvp');
+const rsvpModal = document.getElementById('rsvpModal');
+const rsvpForm = document.getElementById('rsvpForm');
+
+openRsvp.addEventListener('click', () => {
+  rsvpModal.setAttribute('aria-hidden', 'false');
+  rsvpModal.style.display = 'flex';
+});
+
+closeRsvp.addEventListener('click', closeModal);
+cancelRsvp.addEventListener('click', closeModal);
+
+function closeModal() {
+  rsvpModal.setAttribute('aria-hidden', 'true');
+  rsvpModal.style.display = 'none';
+}
+
+// Close modal when clicking outside
+rsvpModal.addEventListener('click', (e) => {
+  if (e.target === rsvpModal) {
+    closeModal();
+  }
+});
+
+// Handle RSVP form submission
+rsvpForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const formData = new FormData(rsvpForm);
+  const name = formData.get('name');
+  const email = formData.get('email');
+  const message = formData.get('message');
+
+  // Create email body
+  const emailBody = `
+RSVP Received:
+Name: ${name}
+Email: ${email}
+Message: ${message}
+Date: ${new Date().toLocaleString()}
+  `.trim();
+
+  // Create mailto link
+  const mailtoLink = `mailto:assel@example.com?subject=RSVP: ${name}&body=${encodeURIComponent(emailBody)}`;
+  
+  // Show success message
+  alert(`Thank you, ${name}!\n\nYour RSVP has been recorded. We look forward to celebrating with you!`);
+  
+  // Reset form
+  rsvpForm.reset();
+  closeModal();
+});
+
+// Smooth scroll for any anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+// Add fade-in animation on page load
+window.addEventListener('load', () => {
+  document.body.style.opacity = '1';
 });
